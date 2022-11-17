@@ -1,5 +1,14 @@
-@extends('backend.layouts.master')
+@extends('backend.layouts.navbar')
 
-@section('content')
+@include('backend.layouts.navbar')
+            <!-- /navbar-inner -->
+       @include('backend.layouts.sidebar')
+                    <!--/.span3-->
+                         @include('backend.layouts.dashboard')
+  
+        <!--/.wrapper-->
+               @include('backend.layouts.footer')
 
-@endsection
+
+
+
