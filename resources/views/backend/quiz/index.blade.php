@@ -32,6 +32,12 @@
                       <td>{{$quiz->name}}</td>
                       <td>{{$quiz->description}}</td>
                       <td>{{$quiz->minutes}}</td>
+                      {{-- since id is coming from url --}}
+                      <a href="{{route('quiz.question', [$quiz->id])}}">
+                      <button class="btn btn-inverse">
+                        View Questions
+                      </button>
+                      </a>
                       <td>
                         <a href="{{route('quiz.edit',[
                             $quiz->id])}}">

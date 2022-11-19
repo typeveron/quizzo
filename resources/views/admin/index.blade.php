@@ -1,14 +1,7 @@
-@extends('backend.layouts.navbar')
-
 @include('backend.layouts.navbar')
-            <!-- /navbar-inner -->
-       @include('backend.layouts.sidebar')
-                    <!--/.span3-->
-                         @include('backend.layouts.dashboard')
-  
-        <!--/.wrapper-->
-               @include('backend.layouts.footer')
-
+@include('backend.layouts.sidebar')
+@include('backend.layouts.dashboard')
+@include('backend.layouts.footer')
 
 
 
