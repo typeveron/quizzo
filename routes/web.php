@@ -17,14 +17,32 @@ Route::get('/', function () {
     return view('admin.index');
 });
 
-Auth::routes();
-
+Auth::routes([
+    'register'=>false,
+    'reset'=>false,
+    'verify'=>false
+]);
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('quiz', 'QuizController');
 
+Route::group(['middleware'=>'isAdmin'], function(){
+    Route::get('/', function () {
+        return view('admin.index');
+    });
+});
+
+Route::resource('quiz', 'QuizController');
 Route::resource('question', 'QuestionController');
+Route::resource('user', 'UserController');
+
+Route::get('exam/assign', 'ExamController@create')->name('user.exam');
+Route::post('exam/assign', 'ExamController@assignExam')->name('exam.assign');
+Route::get('exam/user', 'ExamController@userExam')->name('view.exam');
+Route::post('exam/remove', 'ExamController@removeExam')->name('exam.remove');
+
+
 
 //get route quiz
-Route::get('/quiz/{id}/questions', 'QuizController@question')
-->name('quiz.question');
+Route::get('/quiz/{id}/questions', 'QuizController@question')->name('quiz.question');
+
+
