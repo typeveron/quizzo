@@ -24,6 +24,8 @@ Auth::routes([
 ]);
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('user/quiz/{quizId}', 'ExamController@getQuizQuestions');
+
 
 Route::group(['middleware'=>'isAdmin'], function(){
     Route::get('/', function () {
@@ -40,6 +42,8 @@ Route::post('exam/assign', 'ExamController@assignExam')->name('exam.assign');
 Route::get('exam/user', 'ExamController@userExam')->name('view.exam');
 Route::post('exam/remove', 'ExamController@removeExam')->name('exam.remove');
 
+Route::get('/result/user/{userId}/quiz/{quizId}', 'ExamController@viewResult')
+->middleware('auth');
 
 
 //get route quiz
