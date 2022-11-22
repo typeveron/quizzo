@@ -13,15 +13,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('admin.index');
-});
 
 Auth::routes([
     'register'=>false,
     'reset'=>false,
     'verify'=>false
 ]);
+
+Route::post('quiz/create','ExamController@postQuiz')->middleware('auth');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('user/quiz/{quizId}', 'ExamController@getQuizQuestions');
@@ -49,4 +48,5 @@ Route::get('/result/user/{userId}/quiz/{quizId}', 'ExamController@viewResult')
 //get route quiz
 Route::get('/quiz/{id}/questions', 'QuizController@question')->name('quiz.question');
 
-
+Route::get('result', 'ExamController@result')->name('result');
+Route::get('result/{userId}/{quizId}', 'ExamController@userQuizResult');

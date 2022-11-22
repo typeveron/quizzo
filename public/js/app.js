@@ -5378,15 +5378,15 @@ __webpack_require__.r(__webpack_exports__);
         return val === true;
       }).length;
     },
-    postUserChoice: function postUserChoice() {
-      axios.post('quiz/create', {
+    postuserChoice: function postuserChoice() {
+      axios.post('/quiz/create', {
         answerId: this.currentAnswer,
         questionId: this.currentQuestion,
         quizId: this.quizid
       }).then(function (response) {
         console.log(response);
       })["catch"](function (error) {
-        alert("Error!");
+        console.log(error);
       });
     }
   }
@@ -5460,7 +5460,7 @@ var render = function render() {
     staticClass: "card-header"
   }, [_vm._v("Online Test\n                "), _c("span", {
     staticClass: "float-right"
-  }, [_vm._v(_vm._s(_vm.$questionIndex) + "/" + _vm._s(_vm.questions.length))])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.questionIndex) + "/" + _vm._s(_vm.questions.length))])]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("span", {
     staticClass: "float-right",
@@ -5528,7 +5528,7 @@ var render = function render() {
       value: _vm.questionIndex === _vm.questions.length,
       expression: "questionIndex===questions.length"
     }]
-  }, [_c("p", [_c("center", [_vm._v("\n                            You got:" + _vm._s(_vm.score()) + "/" + _vm._s(_vm.questions.length) + "\n                            ")])], 1)])], 2)])])])]);
+  }, [_c("p", [_c("center", [_vm._v("\n                            You got: " + _vm._s(_vm.score()) + "/" + _vm._s(_vm.questions.length) + "\n                            ")])], 1)])], 2)])])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

@@ -12,21 +12,8 @@ use DB;
 
 class ExamController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+ 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('backend.exam.create');
@@ -35,62 +22,6 @@ class ExamController extends Controller
     public function assignExam(Request $request) {
         $quiz = (new Quiz)->assignExam($request->all());
         return redirect()->back()->with('message', 'Exam assigned to user');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function userExam(Request $request) {
@@ -145,23 +76,53 @@ class ExamController extends Controller
         }
 
         public function postQuiz(Request $request) {
-            $questionId = $request['questionId'];
+            $questionId= $request['questionId'];
             $answerId = $request['answerId'];
             $quizId = $request['quizId'];
+    
             $authUser = auth()->user();
+    
             return $userQuestionAnswer = Result::updateOrCreate(
-                ['user_id', $authUser->id, 'quiz_id'=>$quizId, 'question_id'
-                ,$questionId],
+                ['user_id'=>$authUser->id, 'quiz_id'=>$quizId, 'question_id'=>$questionId],
                 ['answer_id'=>$answerId]
+    
             );
         }
 
         public function viewResult($userId, $quizId) {
-            $results = Results::where('user_id', $userId)->where(
+            $results = Result::where('user_id', $userId)->where(
                 'quiz_id', $quizId)->get();
             return view('result-detail', compact('results'));
         }
 
+        public function result() {
+        $quizzes = Quiz::get();
+        return view('backend.result.index',compact('quizzes'));
+    }
+
+        
+    public function userQuizResult($userId, $quizId) {
+        $results = Result::where('user_id',$userId)->where('quiz_id',$quizId)->get();
+        $totalQuestions = Question::where('quiz_id',$quizId)->count();
+        $attemptQuestion =Result::where('quiz_id',$quizId)->where('user_id',$userId)->count();
+        $quiz = Quiz::where('id',$quizId)->get();
+
+        $ans=[];
+        foreach($results as $answer){
+            array_push($ans,$answer->answer_id);
+        }
+        $userCorrectedAnswer = Answer::whereIn('id',$ans)->where('is_correct',1)->count();
+        $userWrongAnswer = $totalQuestions-$userCorrectedAnswer;
+        if($attemptQuestion){
+            $percentage = ($userCorrectedAnswer/$totalQuestions)*100;
+        }else{
+            $percentage=0;
+        }
+       
+        //dd($percentage);
+
+        return view('backend.result.result',compact('results','totalQuestions','attemptQuestion','userCorrectedAnswer','userWrongAnswer','percentage','quiz'));
+    }
 
     }
 

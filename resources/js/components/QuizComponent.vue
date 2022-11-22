@@ -4,7 +4,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Online Test
-                    <span class="float-right">{{$questionIndex}}/{{questions.length}}</span>
+                    <span class="float-right">{{questionIndex}}/{{questions.length}}</span>
                     </div>
                     <div class="card-body">
                         <span class="float-right" style="color:red;">{{time}}</span>
@@ -33,7 +33,7 @@
                         <div v-show="questionIndex===questions.length">
                             <p>
                                 <center>
-                                You got:{{score()}}/{{questions.length}}
+                                You got: {{score()}}/{{questions.length}}
                                 </center>
                             </p>
                         </div>
@@ -76,10 +76,10 @@ import moment from 'moment'
         },
         methods: {
             next() {
-                this.questionIndex++;
+                this.questionIndex++
             },
             prev() {
-                this.questionIndex--;
+                this.questionIndex--
             },
             choices(question, answer) {
                 this.currentAnswer=answer,
@@ -90,15 +90,16 @@ import moment from 'moment'
                     return val===true;
                 }).length
             },
-            postUserChoice() {
-                axios.post('quiz/create', {
-                    answerId: this.currentAnswer,
-                    questionId: this.currentQuestion,
-                    quizId: this.quizid
+            postuserChoice(){
+                axios.post('/quiz/create',{
+                    answerId:this.currentAnswer,
+                    questionId:this.currentQuestion,
+                    quizId :this.quizid
+
                 }).then((response)=>{
                     console.log(response)
                 }).catch((error)=>{
-                    alert("Error!");
+                    console.log(error);
                 });
             }
         }

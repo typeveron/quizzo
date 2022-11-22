@@ -9,7 +9,8 @@ use App\Models\Answer;
 
 class Result extends Model
 {
-    protected $fillable = ['user_id', 'question_id', 'quiz_id', 'answer_id'];
+    protected $fillable = ['user_id', 'question_id', 'answer_id', 'quiz_id'];
+    
     public function question() {
         return $this->belongsTo(Question::class);
     }

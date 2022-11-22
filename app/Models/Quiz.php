@@ -19,7 +19,7 @@ class Quiz extends Model
     }
 
     public function users() {
-        return $this->belongsToMany(User::class, 'quiz_user');
+        return $this->belongsTomany(User::class, 'quiz_user');
     }
 
     public function storeQuiz($data) {

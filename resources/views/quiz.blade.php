@@ -10,4 +10,12 @@
 
 </quiz-component>
 
+{{-- disable right click button --}}
+{{-- <script type="text/javascript">
+    window.oncontextmenu = function () {
+        console.log("Right click disabled");
+        return false;
+    }
+</script> --}}
+
 @endsection
